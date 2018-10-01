@@ -25,6 +25,8 @@ class App extends React.Component {
           scale={{ x: "time" }}
           containerComponent={
             <VictoryZoomContainer
+              disable={false}
+              disableContainerEvents={false}
               responsive={false}
               zoomDimension="x"
               zoomDomain={this.state.zoomDomain}

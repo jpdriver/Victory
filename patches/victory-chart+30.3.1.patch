@@ -1,0 +1,11 @@
+patch-package
+--- a/node_modules/victory-chart/es/victory-chart.js
++++ b/node_modules/victory-chart/es/victory-chart.js
+@@ -124,6 +124,7 @@ function (_React$Component) {
+   }, {
+     key: "render",
+     value: function render() {
++      console.log('render VictoryChart')
+       var props = this.state && this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
+       var modifiedProps = Helpers.modifyProps(props, fallbackProps, "chart");
+       var eventKey = modifiedProps.eventKey,

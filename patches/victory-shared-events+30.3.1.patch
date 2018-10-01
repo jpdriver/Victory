@@ -1,0 +1,38 @@
+patch-package
+--- a/node_modules/victory-shared-events/lib/victory-shared-events.js
++++ b/node_modules/victory-shared-events/lib/victory-shared-events.js
+@@ -21,6 +21,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
+ 
+ var _victoryCore = require("victory-core");
+ 
++var _isEqual = require("react-fast-compare");
++
+ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+ 
+ function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+@@ -69,6 +71,17 @@ function (_React$Component) {
+         getTimer: this.getTimer
+       };
+     }
++  }, {
++    key: "shouldComponentUpdate",
++    value: function shouldComponentUpdate(newProps, newState) {
++      const propsHaveChanged = !_isEqual(this.props, newProps);
++      const stateHasChanged = !_isEqual(this.state, newState);
++      console.log(`shouldComponentUpdate VictorySharedEvents
++
++        propsHaveChanged: ${propsHaveChanged}
++        stateHasChanged: ${stateHasChanged}`);
++      return true;
++    }
+   }, {
+     key: "componentWillReceiveProps",
+     value: function componentWillReceiveProps(newProps) {
+@@ -248,6 +261,7 @@ function (_React$Component) {
+   }, {
+     key: "render",
+     value: function render() {
++      console.log('render VictorySharedEvents')
+       var events = this.getAllEvents(this.props);
+ 
+       if (events) {

@@ -1,0 +1,40 @@
+patch-package
+--- a/node_modules/victory-core/es/victory-container/victory-container.js
++++ b/node_modules/victory-core/es/victory-container/victory-container.js
+@@ -23,6 +23,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
+ 
+ import React from "react";
+ import PropTypes from "prop-types";
++import isEqual from "react-fast-compare";
+ import CustomPropTypes from "../victory-util/prop-types";
+ import Portal from "../victory-portal/portal";
+ import Timer from "../victory-util/timer";
+@@ -72,6 +73,17 @@ function (_React$Component) {
+         getTimer: this.getTimer
+       };
+     }
++  }, {
++    key: "shouldComponentUpdate",
++    value: function shouldComponentUpdate(newProps, newState) {
++      const propsHaveChanged = !isEqual(this.props, newProps);
++      const stateHasChanged = !isEqual(this.state, newState);
++      console.log(`shouldComponentUpdate VictoryContainer (victory-core)
++
++        propsHaveChanged: ${propsHaveChanged}
++        stateHasChanged: ${stateHasChanged}`);
++      return true;
++    }
+   }, {
+     key: "componentWillUnmount",
+     value: function componentWillUnmount() {
+@@ -174,6 +186,10 @@ function (_React$Component) {
+           height = _props.height,
+           responsive = _props.responsive,
+           events = _props.events;
++      console.log(`render VictoryContainer (victory-core)
++
++        disableContainerEvents: ${_props.disableContainerEvents}
++        disable: ${_props.disable}`);
+       var style = responsive ? this.props.style : Helpers.omit(this.props.style, ["height", "width"]);
+ 
+       var svgProps = _assign({

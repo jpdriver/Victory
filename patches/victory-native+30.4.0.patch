@@ -1,0 +1,37 @@
+patch-package
+--- a/node_modules/victory-native/lib/components/victory-container.js
++++ b/node_modules/victory-native/lib/components/victory-container.js
+@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
+ import Svg from "react-native-svg";
+ import { assign, get } from "lodash";
+ import { View, PanResponder } from "react-native";
++import isEqual from "react-fast-compare";
+ import { VictoryContainer } from "victory-core/es";
+ import NativeHelpers from "../helpers/native-helpers";
+ import Portal from "./victory-portal/portal";
+@@ -19,6 +20,17 @@ export default class extends VictoryContainer {
+     this.panResponder = this.getResponder();
+   }
+ 
++  shouldComponentUpdate(newProps, newState) {
++    const propsHaveChanged = !isEqual(this.props, newProps);
++    const stateHasChanged = !isEqual(this.state, newState);
++    console.log(`shouldComponentUpdate VictoryContainer (victory-native)
++
++      propsHaveChanged: ${propsHaveChanged}
++      stateHasChanged: ${stateHasChanged}`);
++
++    return true;
++  }
++
+ 
+   getResponder() {
+     const yes = () => true;
+@@ -90,6 +102,7 @@ export default class extends VictoryContainer {
+     const portalSvgStyle = assign({ overflow: "visible" }, dimensions);
+     const portalProps = { width, height, viewBox: svgProps.viewBox, style: portalSvgStyle };
+     const handlers = disableContainerEvents ? {} : this.panResponder.panHandlers;
++    console.log('render react-native-svg SVG 😱');
+     return (
+       <View {...handlers} style={divStyle} touchAction="box-none"
+         className={className} ref={props.containerRef}
